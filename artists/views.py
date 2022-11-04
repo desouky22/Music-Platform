@@ -22,9 +22,6 @@ from .serializers import ArtistSerializer
 
 
 class ArtistList(APIView):
-    authentication_classes = [BasicAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
     def get(self, request, *args, **kwargs):
         queryset = Artist.objects.prefetch_related("albums").all()
         serializer = ArtistSerializer(queryset, many=True)
