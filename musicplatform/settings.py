@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "artists",
     "albums",
-    "users",
 ]
 
 MIDDLEWARE = [
