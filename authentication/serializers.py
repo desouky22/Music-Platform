@@ -4,7 +4,6 @@ from django.contrib.auth.password_validation import validate_password
 from users.models import User
 
 
-
 class RegisterSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=100)
     email = serializers.EmailField(required=True)
@@ -22,6 +21,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"password": "Password fields don't match"}
             )
+
+        if User.objects.filter(username=data["username"]).exists():
+            raise serializers.ValidationError({"username": "this username is in use"})
+
+        if User.objects.filter(email=data["email"]).exists():
+            raise serializers.ValidationError({"email": "this email is in use"})
+
         return data
 
     def create(self, validated_data):

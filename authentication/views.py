@@ -21,7 +21,7 @@ class Register(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -29,14 +29,13 @@ class Register(APIView):
 class Login(LoginView):
     permission_classes = [AllowAny]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, format=None, *args, **kwargs):
         serializer = AuthTokenSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data["user"]
             deserialized_user = UserSerializer(user)
             auth_login(request, user)
             instance, token = AuthToken.objects.create(user)
-
             return Response({"Knox Token": token, "User": deserialized_user.data})
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)

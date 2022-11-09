@@ -2,11 +2,15 @@ from django.contrib import admin
 from .models import Album, Song
 
 
-@admin.register(Album)
-class AlbumAdmin(admin.ModelAdmin):
-    pass
+class InlineSong(admin.StackedInline):
+    model = Song
+    extra = 0
+    min_num = 1
 
 
-@admin.register(Song)
-class SongAdmin(admin.ModelAdmin):
-    pass
+class AlbumDataAdmin(admin.ModelAdmin):
+    inlines = [InlineSong]
+
+
+admin.site.register(Album, AlbumDataAdmin)
+admin.site.register(Song)
