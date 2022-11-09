@@ -1,6 +1,8 @@
 from pathlib import Path
 import environ
 import os
+from datetime import timedelta
+from rest_framework.settings import api_settings
 
 
 env = environ.Env()
@@ -33,6 +35,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "knox",
     "artists",
     "albums",
     "users",
@@ -128,3 +131,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 AUTH_USER_MODEL = "users.User"
+
+
+REST_KNOX = {
+    "SECURE_HASH_ALGORITHM": "cryptography.hazmat.primitives.hashes.SHA512",
+    "TOKEN_TTL": timedelta(days=30),
+}
+
+REST_FRAMEWORK = {"DEFAULT_AUTHENTICATION_CLASSES": ["knox.auth.TokenAuthentication"]}
