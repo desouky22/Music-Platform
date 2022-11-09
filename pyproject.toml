@@ -15,6 +15,7 @@ black = "^22.10.0"
 django-extensions = "^3.2.1"
 django-imagekit = "^4.1.0"
 Pillow = "^9.3.0"
+django-rest-knox = "^4.2.0"
 
 
 [build-system]
