@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_filters",
     "rest_framework",
     "knox",
     "artists",
@@ -138,4 +139,8 @@ REST_KNOX = {
     "TOKEN_TTL": timedelta(days=30),
 }
 
-REST_FRAMEWORK = {"DEFAULT_AUTHENTICATION_CLASSES": ["knox.auth.TokenAuthentication"]}
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ["knox.auth.TokenAuthentication"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 1,
+}

@@ -6,7 +6,6 @@ from imagekit.processors import ResizeToFill
 from pilkit.processors import Thumbnail
 from django.core.validators import FileExtensionValidator
 
-
 class Album(TimeStampedModel):
     artist = models.ForeignKey(
         Artist, on_delete=models.CASCADE, related_name="albums", null=False, blank=False
@@ -17,6 +16,9 @@ class Album(TimeStampedModel):
     is_approved = models.BooleanField(
         default=False, help_text="Approve the album if its name is not explicit"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Song(models.Model):

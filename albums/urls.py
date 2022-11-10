@@ -2,4 +2,7 @@ from django.urls import path, include
 from . import views
 
 
-urlpatterns = []
+urlpatterns = [
+    path("", views.AlbumList.as_view()),
+    path("manualFilter/", views.AlbumListAddingManualFiltering.as_view()),
+]

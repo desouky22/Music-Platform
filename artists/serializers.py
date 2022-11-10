@@ -1,6 +1,5 @@
 from .models import Artist
 from rest_framework import serializers
-from albums.serializers import AlbumSerializer
 
 
 class ArtistSerializer(serializers.ModelSerializer):
