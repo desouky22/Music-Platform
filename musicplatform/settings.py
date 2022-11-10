@@ -144,3 +144,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 1,
 }
+
+CELERY_CONF_BROKER_URL = "redis://localhost:6379/1"
+EMAIL_HOST_USER = "omaressamdesouky2274@gmail.com"
+CELERY_CONF_BROKER_URL = "redis://localhost:6379"
+CELERY_CONF_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_CONF_BEAT_SCHEADULE = {
+    'add-every-30-seconds': {
+        'task': 'albums.tasks.add',
+        'schedule': 30.0,
+        'args': (16, 16)
+    },
+
+}

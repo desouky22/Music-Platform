@@ -6,11 +6,13 @@ from .serializers import AlbumSerializer, PostAlbumSerializer
 from .permissions import IsArtist
 from knox.auth import TokenAuthentication
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework import status
 from artists.models import Artist
 from artists.serializers import ArtistSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import AlbumFilter
+from .tasks import sending_emails
 
 
 class AlbumList(ListCreateAPIView):
@@ -58,3 +60,9 @@ class AlbumListAddingManualFiltering(ListAPIView):
             queryset = queryset.filter(cost__gt=cost_gt)
 
         return queryset
+
+
+@api_view(["GET"])
+def send_emails(request):
+    sending_emails.run(1)
+    return Response(status=status.HTTP_200_OK)

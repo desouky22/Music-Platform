@@ -5,6 +5,11 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from pilkit.processors import Thumbnail
 from django.core.validators import FileExtensionValidator
+from django.dispatch import receiver
+from django.utils.text import slugify
+from django.db.models.signals import post_save, pre_save
+from .tasks import sending_emails
+
 
 class Album(TimeStampedModel):
     artist = models.ForeignKey(
@@ -19,6 +24,12 @@ class Album(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+
+@receiver(post_save, sender=Album)
+def album_post_save(sender, instance, created, *args, **kwargs):
+    if created:
+        sending_emails.delay(instance.artist.id)
 
 
 class Song(models.Model):
